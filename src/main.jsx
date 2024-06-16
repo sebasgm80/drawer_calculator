@@ -7,9 +7,7 @@ import { UserProvider } from './context/userContext'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <UserProvider>
     <RouterProvider router={router} />
     </UserProvider>
-  </React.StrictMode>,
 )
