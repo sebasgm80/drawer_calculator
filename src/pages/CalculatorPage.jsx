@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import measurements from '../components/data/measurements.json';
 import './CalculatorPage.css';
-import { useUserContext } from '../hooks/useUserContext';
+import { useUserContext } from '../context/userContext';
 import { logger } from '../utils/logger';
 
 const CalculatorPage = () => {

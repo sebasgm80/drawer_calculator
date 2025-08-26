@@ -59,9 +59,7 @@ drawer_calculator/
 │   │   ├── Footer.jsx
 │   │   └── ...
 │   ├── context/
-│   │   ├── UserContext.jsx
-│   ├── hooks/
-│   │   ├── useUserContext.jsx
+│   │   ├── userContext.jsx
 │   ├── pages/
 │   │   ├── Home.jsx
 │   │   ├── LoginPage.jsx
