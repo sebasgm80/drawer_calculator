@@ -1,6 +1,9 @@
 import "./Home.css"
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="home-content">
       <section className="home-intro">
@@ -15,11 +18,11 @@ const Home = () => {
           <li>Fácil de usar</li>
           <li>Acceso desde cualquier dispositivo</li>
         </ul>
-      </section>
-      <section className="home-actions">
-        <button onClick={() => window.location.href='/calculator'}>Empezar a Calcular</button>
-        <button onClick={() => window.location.href='/register'}>Registrarse</button>
-      </section>
+        </section>
+        <section className="home-actions">
+          <button onClick={() => navigate('/calculator')}>Empezar a Calcular</button>
+          <button onClick={() => navigate('/register')}>Registrarse</button>
+        </section>
     </div>
   )
 }

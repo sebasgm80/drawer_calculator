@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import './Header.css';
 
@@ -27,13 +27,13 @@ export const Header = () => {
             ☰
           </button>
           <ul className={menuActive ? 'active' : ''}>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/calculator">Calculadora</a></li>
-            <li><a href="/list">Mis Proyectos</a></li>
+            <li><Link to="/">Inicio</Link></li>
+            <li><Link to="/calculator">Calculadora</Link></li>
+            <li><Link to="/list">Mis Proyectos</Link></li>
             {!user ? (
               <>
-                <li><a href="/register">Registrarse</a></li>
-                <li><a href="/login">Iniciar Sesión</a></li>
+                <li><Link to="/register">Registrarse</Link></li>
+                <li><Link to="/login">Iniciar Sesión</Link></li>
               </>
             ) : (
               <li>
