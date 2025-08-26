@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import measurements from '../components/data/measurements.json';
 import './CalculatorPage.css';
 import { useUserContext } from '../hooks/useUserContext';
+import { logger } from '../utils/logger';
 
 const CalculatorPage = () => {
   const [width, setWidth] = useState(1000);
@@ -60,7 +61,7 @@ const CalculatorPage = () => {
     };
 
     setResult(newResult);
-    console.log("Adding Result:", newResult);
+    logger('Adding Result:', newResult);
     addResult(newResult);
   };
 

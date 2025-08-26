@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import { logger } from '../utils/logger';
 
 export const UserContext = createContext();
 
@@ -13,18 +14,18 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem('currentUser', JSON.stringify(user));
   }, [user]);
 
-  useEffect(() => {
-    localStorage.setItem('resultsList', JSON.stringify(resultsList));
-    console.log("Updated Results List in Context:", resultsList);
-  }, [resultsList]);
+    useEffect(() => {
+      localStorage.setItem('resultsList', JSON.stringify(resultsList));
+      logger('Updated Results List in Context:', resultsList);
+    }, [resultsList]);
 
-  const addResult = (result) => {
-    setResultsList(prevResults => {
-      const updatedResults = [...prevResults, { ...result, id: prevResults.length + 1, name: `Mueble ${prevResults.length + 1}` }];
-      console.log("Adding Result:", result);
-      return updatedResults;
-    });
-  };
+    const addResult = (result) => {
+      setResultsList(prevResults => {
+        const updatedResults = [...prevResults, { ...result, id: prevResults.length + 1, name: `Mueble ${prevResults.length + 1}` }];
+        logger('Adding Result:', result);
+        return updatedResults;
+      });
+    };
 
   const updateResultName = (id, newName) => {
     setResultsList(prevResults => prevResults.map(result => result.id === id ? { ...result, name: newName } : result));
