@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import measurements from '../components/data/measurements.json';
-import './CalculatorPage.css';
 import { useUserContext } from '../hooks/useUserContext';
 import { logger } from '../utils/logger';
+import { Box, Typography, TextField, Select, MenuItem, Button, FormControl, InputLabel } from '@mui/material';
 
 const CalculatorPage = () => {
   const [width, setWidth] = useState(1000);
@@ -144,130 +144,105 @@ const CalculatorPage = () => {
   };
 
   return (
-    <div className="calculator-container">
-      <h2>Calculadora de Cajones</h2>
-      <div className="section">
-        <h3>Mueble</h3>
-        <div className="form-group">
-          <label>
-            Ancho interior mueble en mm:
-            <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} />
-          </label>
-          <label>
-            Alto interior mueble en mm:
-            <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} />
-          </label>
-          <label>
-            Profundidad del mueble en mm:
-            <input type="number" value={depth} onChange={(e) => setDepth(e.target.value)} />
-          </label>
-          <label>
-            Grueso de los laterales (montante) en mm:
-            <input type="number" value={sideThickness} onChange={(e) => setSideThickness(e.target.value)} />
-          </label>
-          <label>
-            Grueso de los travesaños en mm:
-            <input type="number" value={traverseThickness} onChange={(e) => setTraverseThickness(e.target.value)} />
-          </label>
-        </div>
-      </div>
-      <div className="section">
-        <h3>Cajones</h3>
-        <div className="form-group">
-          <label>
-            Tipo:
-            <select value={type} onChange={(e) => setType(e.target.value)}>
-              <option value="tandem16">Tandem 16</option>
-              <option value="tandem19">Tandem 19</option>
-            </select>
-          </label>
-          <label>
-            Largo de Guía:
-            <select value={guideLength} onChange={(e) => setGuideLength(e.target.value)}>
-              <option value="auto">Auto</option>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2, backgroundColor: '#ffffff', borderRadius: 2, boxShadow: 1, maxWidth: 1200, m: 2 }}>
+      <Typography variant="h4" sx={{ mb: 3 }}>Calculadora de Cajones</Typography>
+      <Box component="section" sx={{ width: '100%', mb: 3 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>Mueble</Typography>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(auto-fit, minmax(200px, 1fr))' }, gap: 2 }}>
+          <TextField label="Ancho interior mueble en mm" type="number" value={width} onChange={(e) => setWidth(e.target.value)} />
+          <TextField label="Alto interior mueble en mm" type="number" value={height} onChange={(e) => setHeight(e.target.value)} />
+          <TextField label="Profundidad del mueble en mm" type="number" value={depth} onChange={(e) => setDepth(e.target.value)} />
+          <TextField label="Grueso de los laterales (montante) en mm" type="number" value={sideThickness} onChange={(e) => setSideThickness(e.target.value)} />
+          <TextField label="Grueso de los travesaños en mm" type="number" value={traverseThickness} onChange={(e) => setTraverseThickness(e.target.value)} />
+        </Box>
+      </Box>
+      <Box component="section" sx={{ width: '100%', mb: 3 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>Cajones</Typography>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(auto-fit, minmax(200px, 1fr))' }, gap: 2 }}>
+          <FormControl>
+            <InputLabel>Tipo</InputLabel>
+            <Select value={type} label="Tipo" onChange={(e) => setType(e.target.value)}>
+              <MenuItem value="tandem16">Tandem 16</MenuItem>
+              <MenuItem value="tandem19">Tandem 19</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel>Largo de Guía</InputLabel>
+            <Select value={guideLength} label="Largo de Guía" onChange={(e) => setGuideLength(e.target.value)}>
+              <MenuItem value="auto">Auto</MenuItem>
               {[...Array(11)].map((_, i) => {
                 const length = 250 + i * 50;
-                return <option key={length} value={length}>{length} mm</option>;
+                return <MenuItem key={length} value={length}>{length} mm</MenuItem>;
               })}
-            </select>
-          </label>
-          <label>
-            Número de cajones:
-            <input type="number" value={numDrawers} min="1" onChange={(e) => setNumDrawers(e.target.value)} />
-          </label>
-          <label>
-            Grueso del fondo del cajón en mm:
-            <input type="number" value={bottomThickness} onChange={(e) => setBottomThickness(e.target.value)} />
-          </label>
-          <label>
-            Grueso del cajón en mm:
-            <select value={drawerThickness} onChange={(e) => setDrawerThickness(e.target.value)}>
-              <option value="16">16 mm</option>
-              <option value="19">19 mm</option>
-            </select>
-          </label>
-          <label>
-            Altura lateral cajón:
-            <select value={drawerHeight} onChange={(e) => setDrawerHeight(e.target.value)}>
-              <option value="auto">Auto</option>
-              <option value="manual">Manual</option>
-            </select>
-            {drawerHeight === 'manual' && (
-              <input
-                type="number"
-                value={manualDrawerHeight}
-                onChange={(e) => setManualDrawerHeight(e.target.value)}
-              />
-            )}
-          </label>
-        </div>
-      </div>
-      <button onClick={handleCalculate}>Calcular</button>
+            </Select>
+          </FormControl>
+          <TextField label="Número de cajones" type="number" value={numDrawers} min="1" onChange={(e) => setNumDrawers(e.target.value)} />
+          <TextField label="Grueso del fondo del cajón en mm" type="number" value={bottomThickness} onChange={(e) => setBottomThickness(e.target.value)} />
+          <FormControl>
+            <InputLabel>Grueso del cajón en mm</InputLabel>
+            <Select value={drawerThickness} label="Grueso del cajón en mm" onChange={(e) => setDrawerThickness(e.target.value)}>
+              <MenuItem value="16">16 mm</MenuItem>
+              <MenuItem value="19">19 mm</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel>Altura lateral cajón</InputLabel>
+            <Select value={drawerHeight} label="Altura lateral cajón" onChange={(e) => setDrawerHeight(e.target.value)}>
+              <MenuItem value="auto">Auto</MenuItem>
+              <MenuItem value="manual">Manual</MenuItem>
+            </Select>
+          </FormControl>
+          {drawerHeight === 'manual' && (
+            <TextField label="Altura manual" type="number" value={manualDrawerHeight} onChange={(e) => setManualDrawerHeight(e.target.value)} />
+          )}
+        </Box>
+      </Box>
+      <Button variant="contained" onClick={handleCalculate}>Calcular</Button>
       {result && (
-        <div className="calculator-result">
-          <h3>Resultados:</h3>
+        <Box className="calculator-result" sx={{ mt: 3 }}>
+          <Typography variant="h6">Resultados:</Typography>
           {numDrawers < 3 ? (
             <>
-              <div>
-                <h4>Travesaños:</h4>
-                <p>{result.travesanos.total} de {result.travesanos.length} x {result.travesanosAltura} x {result.travesanos.thickness} mm</p>
-              </div>
-              <div>
-                <h4>Laterales:</h4>
-                <p>{result.laterales.total} de {result.laterales.length} x {result.drawerHeight} x {result.laterales.thickness} mm</p>
-              </div>
-              <div>
-                <h4>Fondos:</h4>
-                <p>{result.fondos.total} de {result.fondos.length} x {result.fondos.width} x {result.fondos.thickness} mm</p>
-              </div>
+              <Box>
+                <Typography variant="subtitle1">Travesaños:</Typography>
+                <Typography>{result.travesanos.total} de {result.travesanos.length} x {result.travesanosAltura} x {result.travesanos.thickness} mm</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle1">Laterales:</Typography>
+                <Typography>{result.laterales.total} de {result.laterales.length} x {result.drawerHeight} x {result.laterales.thickness} mm</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle1">Fondos:</Typography>
+                <Typography>{result.fondos.total} de {result.fondos.length} x {result.fondos.width} x {result.fondos.thickness} mm</Typography>
+              </Box>
             </>
           ) : (
             <>
-              <div>
-                <h4>Travesaños superior/inferior:</h4>
-                <p>4 de {result.travesanos.length} x {result.travesanosAltura.topBottomTravesanosAltura} x {result.travesanos.thickness} mm</p>
-              </div>
-              <div>
-                <h4>Laterales superior/inferior:</h4>
-                <p>4 de {result.laterales.length} x {result.drawerHeight.topBottomHeight} x {result.laterales.thickness} mm</p>
-              </div>
-              <div>
-                <h4>Travesaños centrales:</h4>
-                <p>{result.travesanos.total - 4} de {result.travesanos.length} x {result.travesanosAltura.centralTravesanosAltura} x {result.travesanos.thickness} mm</p>
-              </div>
-              <div>
-                <h4>Laterales centrales:</h4>
-                <p>{result.laterales.total - 4} de {result.laterales.length} x {result.drawerHeight.centralHeight} x {result.laterales.thickness} mm</p>
-              </div>
-              <div>
-                <h4>Fondos:</h4>
-                <p>{result.fondos.total} de {result.fondos.length} x {result.fondos.width} x {result.fondos.thickness} mm</p>
-              </div>
+              <Box>
+                <Typography variant="subtitle1">Travesaños superior/inferior:</Typography>
+                <Typography>4 de {result.travesanos.length} x {result.travesanosAltura.topBottomTravesanosAltura} x {result.travesanos.thickness} mm</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle1">Laterales superior/inferior:</Typography>
+                <Typography>4 de {result.laterales.length} x {result.drawerHeight.topBottomHeight} x {result.laterales.thickness} mm</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle1">Travesaños centrales:</Typography>
+                <Typography>{result.travesanos.total - 4} de {result.travesanos.length} x {result.travesanosAltura.centralTravesanosAltura} x {result.travesanos.thickness} mm</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle1">Laterales centrales:</Typography>
+                <Typography>{result.laterales.total - 4} de {result.laterales.length} x {result.drawerHeight.centralHeight} x {result.laterales.thickness} mm</Typography>
+              </Box>
+              <Box>
+                <Typography variant="subtitle1">Fondos:</Typography>
+                <Typography>{result.fondos.total} de {result.fondos.length} x {result.fondos.width} x {result.fondos.thickness} mm</Typography>
+              </Box>
             </>
           )}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 
