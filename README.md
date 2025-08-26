@@ -12,6 +12,10 @@
 - **Project Management**: Save, rename, and delete drawer projects.
 - **Modern UI**: Clean, modern user interface with easy navigation.
 
+## Security Considerations
+
+Passwords are hashed before being stored in localStorage for demonstration purposes. For production use, move authentication to a secure backend or external service.
+
 ## Technologies Used
 
 - **Frontend**: React, JavaScript, HTML5, CSS3

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../hooks/useUserContext';
+import bcrypt from '../utils/bcrypt';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -8,14 +9,21 @@ const LoginPage = () => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const registeredUser = JSON.parse(localStorage.getItem('registeredUser'));
 
-    if (registeredUser && registeredUser.username === username && registeredUser.password === password) {
-      setUser(registeredUser);
-      localStorage.setItem('currentUser', JSON.stringify(registeredUser));
-      navigate('/calculator');
+    if (registeredUser && registeredUser.username === username) {
+      const isValid = await bcrypt.compare(password, registeredUser.password);
+
+      if (isValid) {
+        const user = { username: registeredUser.username };
+        setUser(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        navigate('/calculator');
+      } else {
+        alert('Nombre de usuario o contraseña incorrectos');
+      }
     } else {
       alert('Nombre de usuario o contraseña incorrectos');
     }

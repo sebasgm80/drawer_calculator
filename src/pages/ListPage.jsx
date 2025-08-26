@@ -4,7 +4,7 @@ import { logger } from '../utils/logger';
 import './ListPage.css';
 
 const ListPage = () => {
-  const { resultsList, updateResultName, removeResult, recalculateResult } = useUserContext();
+  const { resultsList, updateResultName, removeResult } = useUserContext();
   const [editId, setEditId] = useState(null);
   const [newName, setNewName] = useState('');
 
@@ -16,11 +16,6 @@ const ListPage = () => {
     updateResultName(id, newName);
     setEditId(null);
     setNewName('');
-  };
-
-  const handleRecalculate = (result) => {
-    const recalculatedResult = { ...result };
-    recalculateResult(result.id, recalculatedResult);
   };
 
   const renderResultDetails = (result) => {
