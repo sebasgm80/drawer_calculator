@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../hooks/useUserContext';
 import { logger } from '../utils/logger';
 import './ListPage.css';
 
 const ListPage = () => {
-  const { resultsList, updateResultName, removeResult, recalculateResult } = useUserContext();
+  const { resultsList, updateResultName, removeResult } = useUserContext();
+  const navigate = useNavigate();
   const [editId, setEditId] = useState(null);
   const [newName, setNewName] = useState('');
 
@@ -18,9 +20,8 @@ const ListPage = () => {
     setNewName('');
   };
 
-  const handleRecalculate = (result) => {
-    const recalculatedResult = { ...result };
-    recalculateResult(result.id, recalculatedResult);
+  const handleEdit = (result) => {
+    navigate('/calculator', { state: { result } });
   };
 
   const renderResultDetails = (result) => {
@@ -92,6 +93,7 @@ const ListPage = () => {
                 <button onClick={() => { setEditId(result.id); setNewName(result.name); }}>Renombrar</button>
               </>
             )}
+            <button onClick={() => handleEdit(result)}>Editar</button>
             <button onClick={() => removeResult(result.id)}>Eliminar</button>
             <figure>
               {renderResultDetails(result)}

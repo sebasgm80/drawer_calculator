@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import measurements from '../components/data/measurements.json';
 import './CalculatorPage.css';
 import { useUserContext } from '../hooks/useUserContext';
@@ -18,7 +19,9 @@ const CalculatorPage = () => {
   const [drawerHeight, setDrawerHeight] = useState('auto');
   const [manualDrawerHeight, setManualDrawerHeight] = useState(100);
   const [result, setResult] = useState(null);
-  const { addResult } = useUserContext();
+  const { addResult, recalculateResult } = useUserContext();
+  const location = useLocation();
+  const editingResult = location.state?.result;
 
   const handleCalculate = () => {
     const userMeasurements = {
@@ -60,9 +63,16 @@ const CalculatorPage = () => {
       resto: predefinedMeasurements.resto,
     };
 
-    setResult(newResult);
-    logger('Adding Result:', newResult);
-    addResult(newResult);
+    const displayResult = { ...newResult, drawerHeight: userMeasurements.drawerHeight };
+    setResult(displayResult);
+
+    if (editingResult) {
+      logger('Recalculating Result:', newResult);
+      recalculateResult(editingResult.id, newResult);
+    } else {
+      logger('Adding Result:', newResult);
+      addResult(newResult);
+    }
   };
 
   const calculateTravesanos = (width, resto, numDrawers) => {
@@ -142,6 +152,38 @@ const CalculatorPage = () => {
       };
     }
   };
+
+  useEffect(() => {
+    if (editingResult) {
+      setWidth(editingResult.width);
+      setHeight(editingResult.height);
+      setDepth(editingResult.depth);
+      setBottomThickness(editingResult.bottomThickness);
+      setNumDrawers(editingResult.numDrawers);
+      setSideThickness(editingResult.sideThickness);
+      setTraverseThickness(editingResult.traverseThickness);
+      setDrawerThickness(editingResult.drawerThickness);
+      setGuideLength(editingResult.selectedGuideLength.toString());
+      setType(editingResult.resto === measurements.tandem16.resto ? 'tandem16' : 'tandem19');
+
+      if (editingResult.numDrawers < 3) {
+        const autoHeight = calculateAutoDrawerHeight(editingResult.height, editingResult.numDrawers, editingResult.traverseThickness);
+        if (autoHeight === editingResult.drawerHeight) {
+          setDrawerHeight('auto');
+        } else {
+          setDrawerHeight('manual');
+          setManualDrawerHeight(editingResult.drawerHeight);
+        }
+      } else {
+        setDrawerHeight('auto');
+      }
+
+      const parsedHeight = typeof editingResult.drawerHeight === 'string'
+        ? JSON.parse(editingResult.drawerHeight)
+        : editingResult.drawerHeight;
+      setResult({ ...editingResult, drawerHeight: parsedHeight });
+    }
+  }, [editingResult]);
 
   return (
     <div className="calculator-container">
