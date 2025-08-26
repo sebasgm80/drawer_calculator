@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUserContext } from '../hooks/useUserContext';
+import { logger } from '../utils/logger';
 import './ListPage.css';
 
 const ListPage = () => {
@@ -8,7 +9,7 @@ const ListPage = () => {
   const [newName, setNewName] = useState('');
 
   useEffect(() => {
-    console.log("Results List in ListPage:", resultsList);
+    logger('Results List in ListPage:', resultsList);
   }, [resultsList]);
 
   const handleRename = (id) => {
