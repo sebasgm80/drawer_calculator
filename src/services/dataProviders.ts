@@ -58,10 +58,12 @@ export async function fetchClosesAlphaVantage(
   const seriesKey = extractSeriesKey(tf);
   const series = data[seriesKey] as Record<string, { "4. close": string }> | undefined;
   if (!series) {
+    const info = (data as { Information?: unknown }).Information;
     const message =
       (typeof data.Note === "string" && data.Note) ||
       (typeof data["Error Message"] === "string" && data["Error Message"]) ||
-      "Sin datos (posible rate limit)";
+      (typeof info === "string" && info) ||
+      "Alpha Vantage no devolvió datos. Suele ocurrir al superar el límite gratuito (5 peticiones por minuto y 500 al día) o cuando el par no está disponible.";
     throw new Error(message);
   }
   const entries = Object.entries(series).sort(

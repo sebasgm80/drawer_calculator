@@ -15,6 +15,8 @@ const MODE_OPTIONS: { value: Mode; label: string }[] = [
   { value: "alphavantage", label: "Alpha Vantage" },
 ];
 
+const ALPHA_VANTAGE_DELAY_MS = 12_500;
+
 const DEFAULT_PAIRS_TEXT = DEFAULT_PAIRS.join("\n");
 
 function computeSignal(globalScore: number | null, overPct: number, underPct: number): GlobalSignal {
@@ -95,7 +97,7 @@ function App() {
         nextRows.push({ pair, rsi: null, tsi: null, score: null });
       }
       if (mode === "alphavantage" && i < pairs.length - 1) {
-        await sleep(1400);
+        await sleep(ALPHA_VANTAGE_DELAY_MS);
       }
     }
 
