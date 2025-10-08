@@ -49,7 +49,7 @@ Completa `ALPHA_VANTAGE_KEY` con tu clave cuando uses el modo Alpha Vantage.
 2. Revisa o ajusta la lista de pares en el textarea.
 3. Selecciona el timeframe y la fuente de datos.
 4. Si eliges Alpha Vantage, introduce tu API key.
-5. Pulsa **Calcular**. La app descargará cada serie de precios de forma secuencial (1.4 s entre peticiones para respetar el rate limit) y mostrará resultados.
+5. Pulsa **Calcular**. La app descargará cada serie de precios de forma secuencial (12.5 s entre peticiones para respetar el límite gratuito de Alpha Vantage) y mostrará resultados.
 
 Los cálculos del modo Demo se generan con una caminata aleatoria suave para probar la UI sin depender de la API.
 
@@ -122,7 +122,7 @@ Las pruebas unitarias se ubican junto a los módulos (`*.test.ts`).
 
 ## Troubleshooting
 
-- **Rate limit de Alpha Vantage:** aparecerá un mensaje de error. Espera unos segundos y vuelve a intentar o usa el modo Demo.
+- **Rate limit de Alpha Vantage:** el servicio gratuito permite 5 peticiones por minuto y 500 por día. Si ves un mensaje de "Alpha Vantage no devolvió datos...", espera al menos un minuto, reduce el número de pares o cambia al modo Demo.
 - **Series insuficientes:** si un par devuelve pocos datos, se mostrará "—" en sus métricas.
 - **Fallo de dependencias:** asegúrate de tener acceso al registro de npm o usa un mirror autorizado.
 
