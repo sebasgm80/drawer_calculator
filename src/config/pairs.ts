@@ -1,0 +1,32 @@
+export const DEFAULT_PAIRS = [
+  "EURUSD",
+  "GBPUSD",
+  "AUDUSD",
+  "NZDUSD",
+  "USDJPY",
+  "USDCHF",
+  "USDCAD",
+  "EURGBP",
+  "EURAUD",
+  "EURNZD",
+  "EURCAD",
+  "EURCHF",
+  "EURJPY",
+  "GBPAUD",
+  "GBPNZD",
+  "GBPCAD",
+  "GBPCHF",
+  "GBPJPY",
+  "AUDNZD",
+  "AUDCAD",
+  "AUDCHF",
+  "AUDJPY",
+  "NZDCAD",
+  "NZDCHF",
+  "NZDJPY",
+  "CADCHF",
+  "CADJPY",
+  "CHFJPY"
+] as const;
+
+export type DefaultPair = (typeof DEFAULT_PAIRS)[number];
